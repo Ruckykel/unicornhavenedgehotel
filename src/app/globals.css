@@ -1,0 +1,171 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --ink: #14171a;
+    --porcelain: #fafaf7;
+    --mangrove: #1f3a33;
+    --brass: #a8844f;
+    --stone: #8b908d;
+    --mist: #e9ece8;
+    --header-h: 72px;
+    color-scheme: light;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: calc(var(--header-h) + 16px);
+  }
+
+  body {
+    @apply bg-porcelain font-sans text-base text-ink antialiased;
+    font-feature-settings: "ss01";
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display font-normal;
+    line-height: 1.1;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--brass);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: var(--mangrove);
+    color: var(--porcelain);
+  }
+
+  /* Native date inputs: keep the picker icon visible on dark backgrounds. */
+  .on-dark input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+  }
+}
+
+@layer components {
+  .container-site {
+    @apply mx-auto w-full max-w-site px-4 md:px-6;
+  }
+
+  .section {
+    @apply py-section-sm md:py-section;
+  }
+
+  .eyebrow {
+    @apply text-sm font-medium text-stone-deep;
+  }
+
+  .link-underline {
+    @apply underline decoration-1 underline-offset-[6px] transition-colors hover:decoration-brass;
+  }
+
+  .field-label {
+    @apply mb-1.5 block text-sm font-medium;
+  }
+
+  .field {
+    @apply block w-full rounded-sm border border-stone/60 bg-white px-3.5 py-3 text-base text-ink transition-colors placeholder:text-stone-deep/70 hover:border-ink/60 focus:border-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brass aria-[invalid=true]:border-red-700;
+  }
+
+  .field-error {
+    @apply mt-1.5 text-sm text-red-800;
+  }
+
+  .prose-hotel p + p {
+    @apply mt-4;
+  }
+}
+
+@layer utilities {
+  .text-shadow-soft {
+    text-shadow: 0 1px 24px rgb(20 23 26 / 0.35);
+  }
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ——— The Seal: first-load badge reveal (CSS-only, so no JS can strand it). ——— */
+.seal-loader {
+  animation: seal-out 450ms ease 1250ms forwards;
+}
+.seal-loader .seal-ring {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: seal-draw 900ms cubic-bezier(0.65, 0, 0.35, 1) 100ms forwards;
+}
+.seal-loader .seal-ring-inner {
+  animation-delay: 250ms;
+}
+.seal-loader .seal-mark,
+.seal-loader .seal-text {
+  opacity: 0;
+  animation: seal-fade 500ms ease 650ms forwards;
+}
+html.seal-seen .seal-loader {
+  display: none;
+}
+
+@keyframes seal-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes seal-fade {
+  to {
+    opacity: 1;
+  }
+}
+@keyframes seal-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* Wax-seal stamp on the booking confirmation */
+.seal-stamp {
+  animation: seal-stamp 700ms cubic-bezier(0.2, 1.4, 0.4, 1) 200ms both;
+}
+@keyframes seal-stamp {
+  from {
+    opacity: 0;
+    transform: scale(1.6) rotate(-14deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(-6deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .seal-loader {
+    display: none;
+  }
+  .seal-stamp {
+    animation: none;
+    transform: rotate(-6deg);
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

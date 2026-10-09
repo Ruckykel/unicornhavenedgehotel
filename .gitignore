@@ -1,0 +1,12 @@
+node_modules
+.next
+out
+.env*.local
+.env
+.media-tmp
+next-env.d.ts
+*.tsbuildinfo
+# raw client uploads (processed copies live in public/media)
+/pictures
+/videos
+.next-*
